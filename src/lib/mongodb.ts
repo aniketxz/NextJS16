@@ -11,10 +11,6 @@ declare global {
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-	throw new Error("Please define the MONGODB_URI env variable inside .env");
-}
-
 // Initialize the cache on global object to persist across hot reloads in development
 const cached: MongooseCache = global.mongoose || { conn: null, promise: null };
 
@@ -30,6 +26,10 @@ async function connectDB(): Promise<typeof mongoose> {
 	}
 
 	if (!cached.promise) {
+		if (!MONGODB_URI) {
+			throw new Error("Please define the MONGODB_URI env variable inside .env");
+		}
+
 		const options = {
 			bufferCommands: false,
 		};
