@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { IEvent } from "@/src/database";
-import Image from "next/image";
 import { cacheLife } from "next/cache";
+import Image from "next/image";
+import { IEvent } from "@/src/database";
 import BookEvent from "@/src/components/BookEvent";
 import { getSimilarEventsBySlug } from "@/src/lib/actions/event.actions";
 import EventCard from "@/src/components/EventCard";
@@ -18,7 +18,7 @@ const EventDetailItem = ({
 	label: string;
 }) => (
 	<div className="flex-row-gap-2 items-center">
-		<Image src={icon} alt={alt} width={17} height={17} />
+		<Image src={icon} alt={alt} width={17} height={17} className="h-auto w-auto" />
 		<p>{label}</p>
 	</div>
 );
@@ -91,7 +91,7 @@ const EventDetailsPage = async ({
 
 	const bookings = 10;
 
-  const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
+	const similarEvents: IEvent[] = await getSimilarEventsBySlug(slug);
 
 	return (
 		<section id="event">
@@ -152,19 +152,20 @@ const EventDetailsPage = async ({
 						) : (
 							<p className="text-sm">Be the first to book your spot!</p>
 						)}
-						<BookEvent />
+						<BookEvent eventId={event._id as string} slug={event.slug} />
 					</div>
 				</aside>
-      </div>
-      
-      <div className="flex w-full flex-col gap-4 pt-20">
-        <h2>Similar Events</h2>
-        <div className="events">
-          {similarEvents.length > 0 && similarEvents.map((similarEvent: IEvent) => (
-            <EventCard key={similarEvent.slug} {...similarEvent} />
-          ))}     
-        </div>
-      </div>
+			</div>
+
+			<div className="flex w-full flex-col gap-4 pt-20">
+				<h2>Similar Events</h2>
+				<div className="events">
+					{similarEvents.length > 0 &&
+						similarEvents.map((similarEvent: IEvent) => (
+							<EventCard key={similarEvent.slug} {...similarEvent} />
+						))}
+				</div>
+			</div>
 		</section>
 	);
 };
