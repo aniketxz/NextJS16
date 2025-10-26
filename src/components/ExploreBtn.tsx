@@ -15,8 +15,9 @@ const ExploreBtn = () => {
 				<Image
 					src="/icons/arrow-down.svg"
 					alt="arrow-down"
-					width={24}
-					height={24}
+					width={0}
+					height={0}
+					className="size-6"
 				></Image>
 			</a>
 		</button>
